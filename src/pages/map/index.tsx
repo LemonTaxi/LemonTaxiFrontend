@@ -1,6 +1,5 @@
 import mapboxgl from 'mapbox-gl';
 import { useEffect, useRef } from 'react';
-import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import { geometry1, geometry2 } from '@/pages/map/data';
 
 const token = 'pk.eyJ1Ijoic2Vod2FuZm9yZWFsIiwiYSI6ImNsem56M2s0ZTBxZ2syanM4ZGx4b210bHgifQ.c4OIRu9bEN1Vbt0UVrZSKA';
@@ -8,6 +7,8 @@ const token = 'pk.eyJ1Ijoic2Vod2FuZm9yZWFsIiwiYSI6ImNsem56M2s0ZTBxZ2syanM4ZGx4b2
 mapboxgl.accessToken = token;
 
 type Coordinates = [number, number];
+const selectedRouteColor = '#1890FF';
+const noneSelectedRouteColor = '#8C8C8C';
 
 const origin = [129.36071, 36.05328] as Coordinates;
 const destination = [129.3465, 36.149] as Coordinates;
@@ -17,11 +18,9 @@ const cordinates = {
   seoul: [126.978, 37.5665] as Coordinates,
 };
 
-// 마커 찍기
-// 마커 연결하기
-
 export default function MapPage() {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
+  const mapRef = useRef<mapboxgl.Map | null>(null);
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -30,8 +29,10 @@ export default function MapPage() {
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: origin,
-      zoom: 10,
+      zoom: 12.5,
     });
+
+    mapRef.current = map;
 
     const features = () => {
       map.addSource('route1', { type: 'geojson', data: geometry1 });
@@ -45,7 +46,7 @@ export default function MapPage() {
           'line-cap': 'round',
         },
         paint: {
-          'line-color': 'red',
+          'line-color': noneSelectedRouteColor,
           'line-width': 6,
         },
       });
@@ -64,7 +65,7 @@ export default function MapPage() {
           'line-cap': 'round',
         },
         paint: {
-          'line-color': 'blue', // 다른 색상으로 설정
+          'line-color': noneSelectedRouteColor,
           'line-width': 6,
         },
       });
@@ -75,9 +76,26 @@ export default function MapPage() {
     return () => map.remove();
   }, []);
 
+  const highlightRoute = (routeId: string) => {
+    if (!mapRef.current) return;
+
+    const map = mapRef.current;
+
+    const otherRouteId = routeId === 'route1' ? 'route2' : 'route1';
+
+    map.setPaintProperty(routeId, 'line-color', selectedRouteColor);
+    map.setPaintProperty(otherRouteId, 'line-color', noneSelectedRouteColor);
+
+    map.moveLayer(routeId);
+  };
+
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <div style={{ width: '500px', height: '100vh' }} ref={mapContainerRef} />
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ width: '500px', height: '90vh' }} ref={mapContainerRef} />
+        <button onClick={() => highlightRoute('route1')}>1번 루트</button>
+        <button onClick={() => highlightRoute('route2')}>2번 루트</button>
+      </div>
     </div>
   );
 }
