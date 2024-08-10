@@ -1,6 +1,7 @@
 import mapboxgl from 'mapbox-gl';
 import { useEffect, useRef } from 'react';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
+import { geometry1, geometry2 } from '@/pages/map/data';
 
 const token = 'pk.eyJ1Ijoic2Vod2FuZm9yZWFsIiwiYSI6ImNsem56M2s0ZTBxZ2syanM4ZGx4b210bHgifQ.c4OIRu9bEN1Vbt0UVrZSKA';
 
@@ -32,25 +33,45 @@ export default function MapPage() {
       zoom: 10,
     });
 
-    const directions = new MapboxDirections({
-      accessToken: mapboxgl.accessToken,
-      unit: 'metric',
-      profile: 'mapbox/driving',
-    });
+    const features = () => {
+      map.addSource('route1', { type: 'geojson', data: geometry1 });
 
-    map.addControl(directions, 'top-left');
+      map.addLayer({
+        id: 'route1',
+        type: 'line',
+        source: 'route1',
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round',
+        },
+        paint: {
+          'line-color': 'red',
+          'line-width': 6,
+        },
+      });
 
-    // 코드에서 초기 경로 설정
-    directions.setOrigin([129.3435, 36.019]); // 포항 좌표
-    directions.setDestination([126.978, 37.5665]); // 서울 좌표
+      map.addSource('route2', {
+        type: 'geojson',
+        data: geometry2,
+      });
 
-    directions.on('route', (event: any) => {
-      console.log('Route found:', event.route);
-    });
+      map.addLayer({
+        id: 'route2',
+        type: 'line',
+        source: 'route2',
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round',
+        },
+        paint: {
+          'line-color': 'blue', // 다른 색상으로 설정
+          'line-width': 6,
+        },
+      });
+    };
 
-    directions.on('error', (event: any) => {
-      console.error('Error occurred:', event.error);
-    });
+    map.on('load', features);
+
     return () => map.remove();
   }, []);
 
