@@ -1,6 +1,6 @@
 import mapboxgl from 'mapbox-gl';
 import { useEffect, useRef } from 'react';
-import { geometry1, geometry2 } from '@/pages/map/data';
+import { geometry1, geometry2 } from '@/components/map/data';
 
 const token = 'pk.eyJ1Ijoic2Vod2FuZm9yZWFsIiwiYSI6ImNsem56M2s0ZTBxZ2syanM4ZGx4b210bHgifQ.c4OIRu9bEN1Vbt0UVrZSKA';
 
