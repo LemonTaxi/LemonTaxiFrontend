@@ -90,12 +90,10 @@ export default function Map() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <div style={{ width: '500px', height: '90vh' }} ref={mapContainerRef} />
-        <button onClick={() => highlightRoute('route1')}>1번 루트</button>
-        <button onClick={() => highlightRoute('route2')}>2번 루트</button>
-      </div>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div style={{ height: 'calc(100vh - 152px)' }} ref={mapContainerRef} />
+      <button onClick={() => highlightRoute('route1')}>1번 루트</button>
+      <button onClick={() => highlightRoute('route2')}>2번 루트</button>
     </div>
   );
 }
