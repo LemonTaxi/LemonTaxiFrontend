@@ -29,7 +29,7 @@ export default function Map() {
   const mapRef = useRef<mapboxgl.Map | null>(null);
 
   useEffect(() => {
-    axios.post('http://lemontaxi.fly.dev/road-hazards', req).then(console.log);
+    // axios.post('http://lemontaxi.fly.dev/road-hazards', req).then(console.log);
     // axios.get('http://lemontaxi.fly.dev/hello').then(console.log);
   }, []);
 
