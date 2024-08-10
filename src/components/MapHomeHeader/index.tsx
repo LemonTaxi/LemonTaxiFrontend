@@ -7,7 +7,7 @@ import { useDebounce } from 'react-use';
 import HomeHeaderImage from '@/public/images/image-home-header.svg';
 import axios from 'axios';
 import { useSetAtom } from 'jotai';
-import { destinationAtom } from '@/atoms';
+import { routesAtom } from '@/atoms';
 import { useRouter } from 'next/router';
 import SuggestionItem from '@/components/MapHomeHeader/SuggestionItem';
 
@@ -20,7 +20,7 @@ const ORIGIN_LATITUDE = '37.590937';
 export default function MapHomeHeader() {
   const [destinationKeyword, setDestinationKeyword] = useState<string>('');
   const [suggestions, setSuggestions] = useState<any[]>([]);
-  const setDestination = useSetAtom(destinationAtom);
+  const setDestination = useSetAtom(routesAtom);
   const router = useRouter();
 
   useDebounce(

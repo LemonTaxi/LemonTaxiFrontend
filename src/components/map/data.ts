@@ -245,6 +245,11 @@ const source = {
   type: 'LineString',
 };
 
+export type Coordinates = [number, number];
+
+export const selectedRouteColor = '#1890FF';
+export const noneSelectedRouteColor = '#8C8C8C';
+
 export const req = {
   routes: [
     {
@@ -599,7 +604,7 @@ export const req = {
       },
     },
     {
-      id: 'A',
+      id: 'B',
       geometry: {
         coordinates: [
           [129.382438, 35.99831],

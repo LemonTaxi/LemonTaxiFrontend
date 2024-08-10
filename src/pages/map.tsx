@@ -2,10 +2,10 @@ import emotionStyled from '@emotion/styled';
 import MapHeader from '@/components/MapHeader';
 import Map from '@/components/map';
 import { useAtomValue } from 'jotai';
-import { destinationAtom } from '@/atoms';
+import { routesAtom } from '@/atoms';
 
 export default function MapPage() {
-  const destination = useAtomValue(destinationAtom);
+  const destination = useAtomValue(routesAtom);
   console.log({ destination });
   return (
     <StyledWrapper>
