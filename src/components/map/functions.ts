@@ -60,3 +60,23 @@ export const drawRoute = (map: mapboxgl.Map, coordinates: Coordinates[], color: 
     },
   });
 };
+
+export const fitBounds = (map: mapboxgl.Map, coordinates: Coordinates[]) => {
+  const bounds = coordinates.reduce(
+    (bounds, coord) => {
+      return bounds.extend(coord);
+    },
+    new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]),
+  );
+
+  map.fitBounds(bounds, {
+    padding: {
+      top: 60,
+      bottom: 200,
+      left: 20,
+      right: 20,
+    },
+    maxZoom: 30,
+    duration: 2000,
+  });
+};

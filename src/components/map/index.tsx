@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useAtomValue } from 'jotai';
 import { routesAtom } from '@/atoms';
 import { Coordinates, noneSelectedRouteColor, selectedRouteColor } from '@/components/map/data';
-import { drawRoute, highlightRoute, removeAllLayers } from '@/components/map/functions';
+import { drawRoute, fitBounds, highlightRoute, removeAllLayers } from '@/components/map/functions';
 import { Overlay } from '@/components/map/Overlay';
 
 const token = 'pk.eyJ1Ijoic2Vod2FuZm9yZWFsIiwiYSI6ImNsem56M2s0ZTBxZ2syanM4ZGx4b210bHgifQ.c4OIRu9bEN1Vbt0UVrZSKA';
@@ -75,6 +75,8 @@ export default function Map() {
     }
 
     drawRoute(map, safeCoordinates!, selectedRouteColor, 'custom-safe');
+
+    if (safeCoordinates) fitBounds(map, safeCoordinates);
   }, [safeCoordinates, dangerousCoordinates, hazard, isMapLoaded]);
 
   const onClickRouteBox = (safe = false) =>
