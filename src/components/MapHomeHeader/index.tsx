@@ -14,8 +14,8 @@ import SuggestionItem from '@/components/MapHomeHeader/SuggestionItem';
 const MAPBOX_ACCESS_TOKEN =
   'pk.eyJ1Ijoic2Vod2FuZm9yZWFsIiwiYSI6ImNsem56M2s0ZTBxZ2syanM4ZGx4b210bHgifQ.c4OIRu9bEN1Vbt0UVrZSKA';
 
-const ORIGIN_LONGITUDE = '127.01415';
-const ORIGIN_LATITUDE = '37.590937';
+const ORIGIN_LONGITUDE = '129.285677254061';
+const ORIGIN_LATITUDE = '35.84016225';
 
 export default function MapHomeHeader() {
   const [destinationKeyword, setDestinationKeyword] = useState<string>('');
