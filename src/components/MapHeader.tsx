@@ -6,8 +6,10 @@ import NavyFilledCircleIcon from '@/public/icons/icon-navy-filled-circle.svg';
 import PathOptionTapsImage from '@/public/images/image-path-option-taps.svg';
 
 import { Input } from 'antd';
+import { useRouter } from 'next/router';
 
 export default function MapHeader() {
+  const router = useRouter();
   return (
     <StyledWrapper>
       <StyledInputWrapper>
@@ -23,6 +25,7 @@ export default function MapHeader() {
           prefix={<NavyFilledCircleIcon />}
           placeholder="도착지 입력"
           value="경북 포항시 북구 장량중앙로 99"
+          onClick={() => router.push('/')}
         />
         <StyledSwitchVerticalArrowIcon />
       </StyledInputWrapper>

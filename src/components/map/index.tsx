@@ -1,14 +1,22 @@
 import mapboxgl from 'mapbox-gl';
 import { FC, useEffect, useRef, useState } from 'react';
-import { geometry1, geometry2, req } from '@/components/map/data';
+import { geometry1, geometry2, req, res } from '@/components/map/data';
 import { AlertOutlined, InfoCircleOutlined, InfoOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import ProtectCheckIcon from '@/public/icons/icon-protect-check-solid.svg';
 import ProtectCheckDisabledIcon from '@/public/icons/icon-protect-check-solid-disabled.svg';
+import LightIcon from '@/public/icons/light.svg';
+import MoonIcon from '@/public/icons/moon.svg';
+import { Tooltip } from 'antd';
 
 const token = 'pk.eyJ1Ijoic2Vod2FuZm9yZWFsIiwiYSI6ImNsem56M2s0ZTBxZ2syanM4ZGx4b210bHgifQ.c4OIRu9bEN1Vbt0UVrZSKA';
 
 mapboxgl.accessToken = token;
+
+async function getData() {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  return res;
+}
 
 const center = [129.362136, 36.025434] as Coordinates;
 
@@ -29,8 +37,8 @@ export default function Map() {
   const mapRef = useRef<mapboxgl.Map | null>(null);
 
   useEffect(() => {
-    // axios.post('http://lemontaxi.fly.dev/road-hazards', req).then(console.log);
-    // axios.get('http://lemontaxi.fly.dev/hello').then(console.log);
+    axios.post('http://lemontaxi.fly.dev/road-hazards', req).then(console.log);
+    axios.get('http://lemontaxi.fly.dev/hello').then(console.log);
   }, []);
 
   useEffect(() => {
@@ -136,48 +144,75 @@ const Overlay: FC<{ left: number; onClick: () => void; selected?: boolean; short
   selected = false,
   short = false,
 }) => {
+  const [isBrowser, setIsBrowser] = useState(false);
+  useEffect(() => {
+    setIsBrowser(true);
+  }, []);
+
+  if (!isBrowser) return null;
+
   return (
-    <div
-      onClick={onClick}
-      style={{
-        position: 'absolute',
-        bottom: 16,
-        left: left,
-        width: '180px',
-        backgroundColor: 'white',
-        padding: '16px',
-        textAlign: 'center',
-        borderRadius: '12px',
-        border: `2px solid ${selected ? '#1890FF' : '#BFBFBF'}`,
-      }}
+    <Tooltip
+      title={
+        <div style={{ padding: '3px 8px', display: 'flex', alignItems: 'center', gap: '9px' }}>
+          {short ? <MoonIcon /> : <LightIcon />}
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span style={{ color: 'white', fontSize: '14px', fontWeight: 600 }}>
+              {short ? '밤길 위험 구간' : '밝고 안전한 길'}
+            </span>
+            <span style={{ color: '#D9D9D9', fontSize: '11px' }}>
+              {short ? '차선이 안보일 수 있어요' : '차선이 잘 보이는 도로 안내'}
+            </span>
+          </div>
+        </div>
+      }
+      overlayStyle={{ width: '180px' }}
+      open={selected}
     >
       <div
+        onClick={onClick}
         style={{
-          color: selected ? '#1890FF' : '#BFBFBF',
-          fontWeight: 700,
-          textAlign: 'left',
-          lineHeight: '24px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          marginBottom: '5px',
+          position: 'absolute',
+          bottom: 16,
+          left: left,
+          width: '180px',
+          backgroundColor: 'white',
+          padding: '16px',
+          textAlign: 'center',
+          borderRadius: '12px',
+          border: `2px solid ${selected ? '#1890FF' : '#BFBFBF'}`,
         }}
       >
-        {short ? (
-          '최소시간'
-        ) : (
-          <div style={{ display: 'flex' }}>
-            {selected ? <ProtectCheckIcon /> : <ProtectCheckDisabledIcon />}안전우선
-          </div>
-        )}
-        <InfoCircleOutlined style={{ color: '#BFBFBF' }} />
+        <div
+          style={{
+            color: selected ? '#1890FF' : '#BFBFBF',
+            fontWeight: 700,
+            textAlign: 'left',
+            lineHeight: '24px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginBottom: '5px',
+          }}
+        >
+          {short ? (
+            '최소시간'
+          ) : (
+            <div style={{ display: 'flex' }}>
+              {selected ? <ProtectCheckIcon /> : <ProtectCheckDisabledIcon />}안전우선
+            </div>
+          )}
+          <InfoCircleOutlined style={{ color: '#BFBFBF' }} />
+        </div>
+        <div style={{ display: 'flex', alignItems: 'end', marginBottom: '4px' }}>
+          <span style={{ fontSize: '24px', fontWeight: 800 }}>{short ? 32 : 41}</span>
+          <span style={{ fontWeight: 700, margin: '0px 0px 2px 2px' }}>분</span>
+        </div>
+        <div style={{ textAlign: 'left', fontSize: '13px', color: '#595959', marginBottom: '12px' }}>
+          오후 11:23 도착
+        </div>
+        <div style={{ textAlign: 'left', fontSize: '14px' }}>204km · 1,300원</div>
       </div>
-      <div style={{ display: 'flex', alignItems: 'end', marginBottom: '4px' }}>
-        <span style={{ fontSize: '24px', fontWeight: 800 }}>34</span>
-        <span style={{ fontWeight: 700, margin: '0px 0px 2px 2px' }}>분</span>
-      </div>
-      <div style={{ textAlign: 'left', fontSize: '13px', color: '#595959', marginBottom: '12px' }}>오후 11:23 도착</div>
-      <div style={{ textAlign: 'left', fontSize: '14px' }}>204km · 1,300원</div>
-    </div>
+    </Tooltip>
   );
 };
 
