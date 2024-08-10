@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useAtomValue } from 'jotai';
 import { routesAtom } from '@/atoms';
 import { Coordinates, noneSelectedRouteColor, selectedRouteColor } from '@/components/map/data';
-import { drawRoute, fitBounds, highlightRoute, removeAllLayers } from '@/components/map/functions';
+import { drawRoute, fitBounds, getMarkerElements, highlightRoute, removeAllLayers } from '@/components/map/functions';
 import { Overlay } from '@/components/map/Overlay';
 
 const token = 'pk.eyJ1Ijoic2Vod2FuZm9yZWFsIiwiYSI6ImNsem56M2s0ZTBxZ2syanM4ZGx4b210bHgifQ.c4OIRu9bEN1Vbt0UVrZSKA';
@@ -48,7 +48,7 @@ export default function Map() {
     }
 
     axios
-      .post('http://lemontaxi.fly.dev/road-hazards', {
+      .post('https://lemontaxi.fly.dev/road-hazards', {
         routes: [
           { id: 'A', geometry: { coordinates: routes[0].coordinates } },
           { id: 'B', geometry: { coordinates: routes[1].coordinates } },
@@ -69,12 +69,20 @@ export default function Map() {
     const map = mapRef.current;
     removeAllLayers(map);
 
+    const { dangerZoneSvgMarker, destinationSvgMarker, originSvgMarker } = getMarkerElements();
+
     if (dangerousCoordinates) {
       drawRoute(map, dangerousCoordinates!, noneSelectedRouteColor, 'custom-dangerous');
       drawRoute(map, hazard!.coordinates!, 'red', 'custom-hazard');
+      new mapboxgl.Marker(dangerZoneSvgMarker).setLngLat(hazard!.coordinate ?? [0, 0]).addTo(map);
     }
 
     drawRoute(map, safeCoordinates!, selectedRouteColor, 'custom-safe');
+
+    new mapboxgl.Marker(originSvgMarker).setLngLat(safeCoordinates?.[0] ?? [0, 0]).addTo(map);
+    new mapboxgl.Marker(destinationSvgMarker)
+      .setLngLat(safeCoordinates?.[safeCoordinates.length - 1] ?? [0, 0])
+      .addTo(map);
 
     if (safeCoordinates) fitBounds(map, safeCoordinates);
   }, [safeCoordinates, dangerousCoordinates, hazard, isMapLoaded]);
