@@ -4,6 +4,7 @@ import SwitchVerticalArrowIcon from '@/public/icons/icon-switch-vertical-arrow.s
 import BlueBorderCircleIcon from '@/public/icons/icon-blue-border-circle.svg';
 import NavyFilledCircleIcon from '@/public/icons/icon-navy-filled-circle.svg';
 import PathOptionTapsImage from '@/public/images/image-path-option-taps.svg';
+
 import { Input } from 'antd';
 
 export default function MapHeader() {
@@ -11,8 +12,14 @@ export default function MapHeader() {
     <StyledWrapper>
       <StyledInputWrapper>
         <StyledLeftArrowIcon />
-        <StyledStartInput prefix={<BlueBorderCircleIcon />} placeholder="출발지 입력" value="포스코홀딩스 본사" />
+        <StyledStartInput
+          size={'large'}
+          prefix={<BlueBorderCircleIcon />}
+          placeholder="출발지 입력"
+          value="내 위치: 경주컨벤션센터"
+        />
         <StyledEndInput
+          size={'large'}
           prefix={<NavyFilledCircleIcon />}
           placeholder="도착지 입력"
           value="경북 포항시 북구 장량중앙로 99"
@@ -49,7 +56,7 @@ const StyledInputWrapper = emotionStyled.div`
 const StyledLeftArrowIcon = emotionStyled(LeftArrowIcon)`
   align-self: center;
   grid-row: 1 / span 2;
-  padding: 0 4px;
+  padding: 0 10px;
 `;
 
 const StyledSwitchVerticalArrowIcon = emotionStyled(SwitchVerticalArrowIcon)`
@@ -63,10 +70,21 @@ const StyledStartInput = emotionStyled(Input)`
 	grid-column-end: 2;
 	grid-row-start: 1;
 	grid-row-end: 1;
+    height: 44px;
+    border: none !important;
+    background-color: #F5F5F5 !important;
+    font-size: 16px !important;
+    border-radius: 12px !important;
 `;
+
 const StyledEndInput = emotionStyled(Input)`
   grid-column-start: 2;
 	grid-column-end: 2;
 	grid-row-start: 2;
 	grid-row-end: 2;
+	height: 44px;
+    border: none !important;
+    background-color: #F5F5F5 !important;
+    font-size: 16px !important;
+    border-radius: 12px !important;
 `;
