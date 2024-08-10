@@ -17,10 +17,12 @@
     "@types/mapbox-gl": "^3.4.0",
     "antd": "^5.20.0",
     "axios": "^1.7.3",
+    "jotai": "^2.9.2",
     "mapbox-gl": "^3.5.2",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
+    "react-use": "^17.5.1",
     "swr": "^2.2.5"
   },
   "devDependencies": {
