@@ -15,7 +15,7 @@ export default function MapPage() {
         <StyledEndInput prefix={<NavyFilledCircleIcon />} placeholder="도착지 입력" />
         <StyledSwitchVerticalArrowIcon />
       </StyledHeader>
-      <PathOptionTapsImage />
+      <PathOptionTapsImage style={{ marginTop: '2px' }} />
     </StyledWrapper>
   );
 }
@@ -26,6 +26,7 @@ const StyledWrapper = emotionStyled.div`
   flex-direction: column;
   width: 100%;
   background-color: #FFFFFF;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.06);
 `;
 
 const StyledHeader = emotionStyled.div`
