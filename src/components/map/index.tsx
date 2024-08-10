@@ -18,7 +18,7 @@ const cordinates = {
   seoul: [126.978, 37.5665] as Coordinates,
 };
 
-export default function MapPage() {
+export default function Map() {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
 
