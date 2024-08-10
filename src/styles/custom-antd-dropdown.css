@@ -1,4 +1,5 @@
 .custom-antd-dropdown > ul > li {
   padding: 0 !important;
   word-wrap: unset !important;
+  white-space: unset !important;
 }
