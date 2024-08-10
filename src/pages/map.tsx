@@ -12,11 +12,9 @@ export default function MapPage() {
 }
 
 const StyledWrapper = emotionStyled.div`
-  position: relative;
+  
 `;
 
 const StyledMapHeader = emotionStyled(MapHeader)`
-  position: absolute;
-  top: 0;
-  left: 0;
+ 
 `;
