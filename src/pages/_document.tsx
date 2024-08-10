@@ -2,10 +2,17 @@ import React from 'react';
 import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import type { DocumentContext } from 'next/document';
+import Link from 'next/link';
 
 const MyDocument = () => (
   <Html lang="en">
-    <Head />
+    <Head>
+      <Link
+        rel="stylesheet"
+        type="text/css"
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css"
+      />
+    </Head>
     <body>
       <Main />
       <NextScript />
