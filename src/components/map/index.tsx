@@ -86,10 +86,10 @@ export default function Map() {
     <>
       <div style={{ display: 'flex', flexDirection: 'column', position: 'relative', height: 'calc(100vh - 244px)' }}>
         <div style={{ position: 'absolute', top: 0, width: '100%', height: '100%' }} ref={mapContainerRef} />
-        <Overlay left={15} onClick={() => onClickRouteBox(true)} selected={selectedRoute === 'custom-safe'} />
+        <Overlay left={12} onClick={() => onClickRouteBox(true)} selected={selectedRoute === 'custom-safe'} />
         {dangerousCoordinates && (
           <Overlay
-            left={240}
+            left={200}
             onClick={() => onClickRouteBox(false)}
             selected={selectedRoute === 'custom-dangerous'}
             dangerous

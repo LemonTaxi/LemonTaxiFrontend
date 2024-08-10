@@ -23,7 +23,7 @@ export const Overlay: FC<{ left: number; onClick: () => void; selected?: boolean
     <Tooltip
       placement="top"
       title={
-        <div style={{ padding: '3px 8px', display: 'flex', alignItems: 'center', gap: '9px' }}>
+        <div style={{ padding: '3px 5px', display: 'flex', alignItems: 'center', gap: '9px' }}>
           {dangerous ? <MoonIcon /> : <LightIcon />}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ color: 'white', fontSize: '14px', fontWeight: 600 }}>
@@ -35,7 +35,7 @@ export const Overlay: FC<{ left: number; onClick: () => void; selected?: boolean
           </div>
         </div>
       }
-      overlayStyle={{ width: '180px' }}
+      overlayStyle={{ width: '174px' }}
       open={selected}
     >
       <div
@@ -44,7 +44,7 @@ export const Overlay: FC<{ left: number; onClick: () => void; selected?: boolean
           position: 'absolute',
           bottom: 16,
           left: left,
-          width: '180px',
+          width: '142px',
           backgroundColor: 'white',
           padding: '16px',
           textAlign: 'center',
