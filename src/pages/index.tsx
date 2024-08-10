@@ -1,12 +1,18 @@
-import { Button } from 'antd';
-import Link from 'next/link';
+import HomeMap from '@/components/HomeMap';
+import MapHomeHeader from '@/components/MapHomeHeader';
+import emotionStyled from '@emotion/styled';
 
 export default function Home() {
   return (
-    <div>
-      <Button>
-        <Link href="/map">지도</Link>
-      </Button>
+    <div style={{ position: 'relative' }}>
+      <StyledMapHomeHeader />
+      <HomeMap />
     </div>
   );
 }
+
+const StyledMapHomeHeader = emotionStyled(MapHomeHeader)`
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
