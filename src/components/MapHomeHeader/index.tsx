@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useSetAtom } from 'jotai';
 import { destinationAtom } from '@/atoms';
 import { useRouter } from 'next/router';
+import SuggestionItem from '@/components/MapHomeHeader/SuggestionItem';
 
 const MAPBOX_ACCESS_TOKEN =
   'pk.eyJ1Ijoic2Vod2FuZm9yZWFsIiwiYSI6ImNsem56M2s0ZTBxZ2syanM4ZGx4b210bHgifQ.c4OIRu9bEN1Vbt0UVrZSKA';
@@ -22,8 +23,6 @@ export default function MapHomeHeader() {
   const setDestination = useSetAtom(destinationAtom);
   const router = useRouter();
 
-  axios.get('http://lemontaxi.fly.dev/hello');
-
   useDebounce(
     async () => {
       const response = await axios.get(
@@ -31,12 +30,18 @@ export default function MapHomeHeader() {
       );
       setSuggestions(response.data.features);
     },
-    2000,
+    1000,
     [destinationKeyword],
   );
 
   const items: MenuProps['items'] = suggestions.map(suggestion => ({
-    label: <div onClick={() => handleMeneClick(suggestion.id)}>{suggestion.properties.name}</div>,
+    label: (
+      <SuggestionItem
+        onClick={() => handleMeneClick(suggestion.id)}
+        name={suggestion.properties.name}
+        fullAddress={suggestion.properties.full_address}
+      />
+    ),
     key: suggestion.id,
   }));
 
@@ -54,7 +59,7 @@ export default function MapHomeHeader() {
 
   return (
     <StyledWrapper>
-      <Dropdown menu={{ items }} open={items.length > 0}>
+      <StyledDropdown menu={{ items }} open={items.length > 0} overlayClassName="custom-antd-dropdown">
         <StyledInputWrapper>
           <StyledLeftArrowIcon />
           <StyledEndInput
@@ -64,7 +69,7 @@ export default function MapHomeHeader() {
             onChange={e => setDestinationKeyword(e.target.value)}
           />
         </StyledInputWrapper>
-      </Dropdown>
+      </StyledDropdown>
       <HomeHeaderImage />
     </StyledWrapper>
   );
@@ -102,4 +107,11 @@ const StyledLeftArrowIcon = emotionStyled(LeftArrowIcon)`
 
 const StyledEndInput = emotionStyled(Input)`
 
+`;
+
+const StyledDropdown = emotionStyled(Dropdown)`
+  & > ul > li {
+    padding: 0;
+    }
+  
 `;

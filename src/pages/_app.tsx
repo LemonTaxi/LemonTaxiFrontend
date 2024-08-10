@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
+import '@/styles/custom-antd-dropdown.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
