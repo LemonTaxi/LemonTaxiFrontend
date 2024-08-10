@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { req } from '@/components/map/data';
+import { mockReq } from '@/components/map/data';
 
 interface Geometry {
   type: string;
@@ -7,6 +7,6 @@ interface Geometry {
 }
 
 export const routesAtom = atom<Geometry[]>([
-  { type: 'LineString', coordinates: req.routes[0].geometry.coordinates as any },
-  { type: 'LineString', coordinates: req.routes[1].geometry.coordinates },
+  { type: 'LineString', coordinates: mockReq.routes[0].geometry.coordinates as any },
+  { type: 'LineString', coordinates: mockReq.routes[1].geometry.coordinates },
 ]);
