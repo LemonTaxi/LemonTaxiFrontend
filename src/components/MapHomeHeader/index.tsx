@@ -1,7 +1,7 @@
 import emotionStyled from '@emotion/styled';
 import LeftArrowIcon from '@/public/icons/icon-left-arrow.svg';
 import NavyFilledCircleIcon from '@/public/icons/icon-navy-filled-circle.svg';
-import { Input } from 'antd';
+import { Input, message } from 'antd';
 import { useState } from 'react';
 import { useDebounce } from 'react-use';
 import HomeHeaderImage from '@/public/images/image-home-header.svg';
@@ -45,9 +45,22 @@ export default function MapHomeHeader() {
     const response = await axios.get(
       `https://api.mapbox.com/directions/v5/mapbox/driving/${ORIGIN_LONGITUDE}%2C${ORIGIN_LATITUDE}%3B${selected.geometry.coordinates[0]}%2C${selected.geometry.coordinates[1]}?alternatives=true&geometries=geojson&language=en&overview=full&steps=true&access_token=${MAPBOX_ACCESS_TOKEN}`,
     );
-    setRoutes(response.data.routes.slice(0, 2).map((route: any) => route.geometry));
+    if (!response.data.routes.length) {
+      message.error('추천 경로를 찾을 수 없습니다.');
+      return;
+    }
+
+    if (response.data.routes.length === 1) {
+      setRoutes(response.data.routes[0].geometry);
+      return;
+    }
+
+    const routes = response.data.routes.slice(0, 2);
+    const [safeRoute, unsafeRoute] =
+      routes[0].duration > routes[1].duration ? [routes[0], routes[1]] : [routes[1], routes[0]];
+    setRoutes([safeRoute, unsafeRoute].map((route: any) => route.geometry));
     setDestination(selected.properties.name);
-    setDuration(response.data.routes.map((route: any) => route.duration));
+    setDuration(([safeRoute, unsafeRoute] as any).map((route: any) => route.duration));
 
     router.push('/map');
   }
