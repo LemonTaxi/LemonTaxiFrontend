@@ -120,12 +120,12 @@ const StartNavigate = () => {
         alignItems: 'center',
         backgroundColor: '#1890FF',
         color: 'white',
-        fontWeight: 600,
+        fontWeight: 700,
         fontSize: '18px',
         cursor: 'pointer',
       }}
     >
-      경로 안내 시작
+      Start Route Guidance
     </div>
   );
 };

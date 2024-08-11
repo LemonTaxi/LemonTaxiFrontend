@@ -21,21 +21,21 @@ export const Overlay: FC<{ left: number; onClick: () => void; selected?: boolean
 
   return (
     <Tooltip
-      placement="top"
+      placement={dangerous ? 'topRight' : 'topLeft'}
       title={
-        <div style={{ padding: '3px 5px', display: 'flex', alignItems: 'center', gap: '9px' }}>
+        <div style={{ padding: '3px 4px', display: 'flex', alignItems: 'center', gap: '9px' }}>
           {dangerous ? <MoonIcon /> : <LightIcon />}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ color: 'white', fontSize: '14px', fontWeight: 600 }}>
-              {dangerous ? '밤길 위험 구간' : '밝고 안전한 길'}
+              {dangerous ? 'Dangerous areas at night' : 'Bright and safe paths'}
             </span>
             <span style={{ color: '#D9D9D9', fontSize: '11px' }}>
-              {dangerous ? '차선이 안보일 수 있어요' : '차선이 잘 보이는 도로 안내'}
+              {dangerous ? 'You may not be able to see the lane' : 'Road guidance with lane visibility'}
             </span>
           </div>
         </div>
       }
-      overlayStyle={{ width: '174px' }}
+      overlayStyle={{ maxWidth: '240px' }}
       open={selected}
     >
       <div
@@ -64,10 +64,10 @@ export const Overlay: FC<{ left: number; onClick: () => void; selected?: boolean
           }}
         >
           {dangerous ? (
-            '최소시간'
+            'Minimum time'
           ) : (
-            <div style={{ display: 'flex' }}>
-              {selected ? <ProtectCheckIcon /> : <ProtectCheckDisabledIcon />}안전우선
+            <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              {selected ? <ProtectCheckIcon /> : <ProtectCheckDisabledIcon />}Safety first
             </div>
           )}
           <InfoCircleOutlined style={{ color: '#BFBFBF' }} />
@@ -79,7 +79,7 @@ export const Overlay: FC<{ left: number; onClick: () => void; selected?: boolean
         <div style={{ textAlign: 'left', fontSize: '13px', color: '#595959', marginBottom: '12px' }}>
           오후 11:23 도착
         </div>
-        <div style={{ textAlign: 'left', fontSize: '14px' }}>204km · 1,300원</div>
+        <div style={{ textAlign: 'left', fontSize: '14px', color: '#262626' }}>204km · 1,300 won</div>
       </div>
     </Tooltip>
   );

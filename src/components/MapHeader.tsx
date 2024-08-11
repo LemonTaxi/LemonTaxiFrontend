@@ -21,12 +21,12 @@ export default function MapHeader() {
           size={'large'}
           prefix={<BlueBorderCircleIcon style={{ marginRight: '5px' }} />}
           placeholder="출발지 입력"
-          value="내 위치: 경주컨벤션센터"
+          value="My Location: Gyeongju Convention.."
         />
         <StyledEndInput
           size={'large'}
           prefix={<NavyFilledCircleIcon style={{ marginRight: '5px' }} />}
-          placeholder="도착지 입력"
+          placeholder="destination"
           value={destination}
           onClick={() => router.push('/')}
         />
