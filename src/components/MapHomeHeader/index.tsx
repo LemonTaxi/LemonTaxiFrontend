@@ -35,13 +35,7 @@ export default function MapHomeHeader() {
         `https://api.mapbox.com/search/geocode/v6/forward?q=${destinationKeyword}&proximity=ip&access_token=${MAPBOX_ACCESS_TOKEN}`,
       );
 
-      if (!response?.data?.features) {
-        setSuggestions([]);
-        return;
-      }
-
       if (!response.data.features.length) {
-        message.error('검색 결과가 없습니다.');
         setSuggestions([]);
         return;
       }
@@ -100,7 +94,7 @@ export default function MapHomeHeader() {
       >
         <HomeHeaderImage />
       </div>
-      {!!suggestions.length && (
+      {!!destinationKeyword && (
         <div style={{ height: '90vh', width: '100%', padding: '12px 0' }}>
           {suggestions.map(suggestion => (
             <SuggestionItem
