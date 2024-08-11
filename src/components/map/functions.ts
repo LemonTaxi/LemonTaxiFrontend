@@ -4,7 +4,7 @@ import { Coordinates, noneSelectedRouteColor, selectedRouteColor } from '@/compo
 export const highlightRoute = (
   map: mapboxgl.Map,
   routeId: 'custom-safe' | 'custom-dangerous',
-  setSelectedRoute: (arg: string) => any,
+  setSelectedRoute: (arg: 'custom-safe' | 'custom-dangerous') => any,
 ) => {
   const otherRouteId = routeId === 'custom-safe' ? 'custom-dangerous' : 'custom-safe';
 

@@ -3,16 +3,23 @@ import LeftArrowIcon from '@/public/icons/icon-left-arrow.svg';
 import SwitchVerticalArrowIcon from '@/public/icons/icon-switch-vertical-arrow.svg';
 import BlueBorderCircleIcon from '@/public/icons/icon-blue-border-circle.svg';
 import NavyFilledCircleIcon from '@/public/icons/icon-navy-filled-circle.svg';
-import PathOptionTapsImage from '@/public/images/image-path-option-taps.svg';
-
+import CarIcon from '@/public/icons/icon-car.svg';
+import SubwayIcon from '@/public/icons/icon-subway.svg';
+import WalkIcon from '@/public/icons/icon-walk.svg';
 import { Input } from 'antd';
 import { useRouter } from 'next/router';
 import { useAtomValue } from 'jotai';
-import { destinationAtom } from '@/atoms';
+import { destinationAtom, durationAtom, selectedRouteAtom } from '@/atoms';
+import { formatSecondsToHoursAndMinutes } from '@/utils';
 
 export default function MapHeader() {
   const router = useRouter();
   const destination = useAtomValue(destinationAtom);
+  const duration = useAtomValue(durationAtom);
+  const selectedRoute = useAtomValue(selectedRouteAtom);
+
+  const durationText = formatSecondsToHoursAndMinutes(selectedRoute === 'custom-safe' ? duration[0] : duration[1]);
+
   return (
     <StyledWrapper>
       <StyledInputWrapper>
@@ -32,7 +39,57 @@ export default function MapHeader() {
         />
         <StyledSwitchVerticalArrowIcon />
       </StyledInputWrapper>
-      <PathOptionTapsImage style={{ marginTop: '2px' }} />
+      <div
+        style={{
+          display: 'flex',
+          width: '100%',
+          padding: '12px 20px',
+          justifyContent: 'space-between',
+          boxSizing: 'border-box',
+        }}
+      >
+        <div
+          style={{
+            borderRadius: '999999px',
+            backgroundColor: '#1890FF',
+            display: 'flex',
+            alignItems: 'center',
+            color: '#FFF',
+            fontSize: '15px',
+            fontWeight: '500',
+            lineHeight: '18px',
+            padding: '6px 14px',
+            gap: '4px',
+          }}
+        >
+          <CarIcon />
+          <div>{durationText}</div>
+        </div>
+        <div
+          style={{
+            borderRadius: '999999px',
+            display: 'flex',
+            alignItems: 'center',
+            padding: '6px 14px',
+            minWidth: '88px',
+            justifyContent: 'center',
+          }}
+        >
+          <SubwayIcon />
+        </div>
+        <div
+          style={{
+            borderRadius: '999999px',
+            display: 'flex',
+            alignItems: 'center',
+            padding: '6px 14px',
+            minWidth: '88px',
+            justifyContent: 'center',
+          }}
+        >
+          <WalkIcon />
+        </div>
+      </div>
     </StyledWrapper>
   );
 }
