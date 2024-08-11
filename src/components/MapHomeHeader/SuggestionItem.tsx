@@ -1,5 +1,6 @@
 import LocationIcon from '@/public/icons/icon-location.svg';
 import UpRightArrowIcon from '@/public/icons/icon-up-right-arrow.svg';
+import styled from '@emotion/styled';
 
 interface Props {
   name: string;
@@ -9,14 +10,16 @@ interface Props {
 
 export default function SuggestionItem({ name, fullAddress, onClick }: Props) {
   return (
-    <div
+    <Container
       style={{
         display: 'flex',
         alignItems: 'center',
         gap: '12px',
         width: '100%',
-        // padding: '10px 20px',
+        padding: '10px 20px',
         boxSizing: 'border-box',
+        cursor: 'pointer',
+        marginBottom: '4px',
       }}
       onClick={onClick}
     >
@@ -36,6 +39,12 @@ export default function SuggestionItem({ name, fullAddress, onClick }: Props) {
         </div>
       </div>
       <UpRightArrowIcon />
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  :hover {
+    background-color: #f5f5f5;
+  }
+`;

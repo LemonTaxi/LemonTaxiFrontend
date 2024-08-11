@@ -7,24 +7,27 @@ import PathOptionTapsImage from '@/public/images/image-path-option-taps.svg';
 
 import { Input } from 'antd';
 import { useRouter } from 'next/router';
+import { useAtomValue } from 'jotai';
+import { destinationAtom } from '@/atoms';
 
 export default function MapHeader() {
   const router = useRouter();
+  const destination = useAtomValue(destinationAtom);
   return (
     <StyledWrapper>
       <StyledInputWrapper>
         <StyledLeftArrowIcon />
         <StyledStartInput
           size={'large'}
-          prefix={<BlueBorderCircleIcon />}
+          prefix={<BlueBorderCircleIcon style={{ marginRight: '5px' }} />}
           placeholder="출발지 입력"
           value="내 위치: 경주컨벤션센터"
         />
         <StyledEndInput
           size={'large'}
-          prefix={<NavyFilledCircleIcon />}
+          prefix={<NavyFilledCircleIcon style={{ marginRight: '5px' }} />}
           placeholder="도착지 입력"
-          value="경북 포항시 북구 장량중앙로 99"
+          value={destination}
           onClick={() => router.push('/')}
         />
         <StyledSwitchVerticalArrowIcon />
