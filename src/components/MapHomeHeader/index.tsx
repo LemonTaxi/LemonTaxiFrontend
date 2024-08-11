@@ -33,7 +33,7 @@ export default function MapHomeHeader() {
       );
       setSuggestions(response.data.features);
     },
-    1000,
+    500,
     [destinationKeyword],
   );
 
