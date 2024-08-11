@@ -94,15 +94,17 @@ export const Overlay: FC<{ left: number; onClick: () => void; selected?: boolean
           )}
           <InfoCircleOutlined style={{ color: '#BFBFBF' }} />
         </div>
-        <div style={{ display: 'flex', alignItems: 'end', marginBottom: '4px' }}>
+        <div style={{ display: 'flex', alignItems: 'end', marginBottom: '4px', gap: '4px' }}>
           {hours > 0 && (
-            <>
+            <div>
               <span style={{ fontSize: '24px', fontWeight: 800 }}>{hours}</span>
               <span style={{ fontWeight: 700, margin: '0px 0px 2px 2px' }}>h</span>
-            </>
+            </div>
           )}
-          <span style={{ fontSize: '24px', fontWeight: 800 }}>{minutes}</span>
-          <span style={{ fontWeight: 700, margin: '0px 0px 2px 2px' }}>m</span>
+          <div>
+            <span style={{ fontSize: '24px', fontWeight: 800 }}>{minutes}</span>
+            <span style={{ fontWeight: 700, margin: '0px 0px 2px 2px' }}>m</span>
+          </div>
         </div>
         <div style={{ textAlign: 'left', fontSize: '13px', color: '#595959', marginBottom: '12px' }}>
           {getArrivalTimeMessage(dangerous ? duration[1] : duration[0])}
