@@ -23,7 +23,7 @@ export default function MapHeader() {
   return (
     <StyledWrapper>
       <StyledInputWrapper>
-        <StyledLeftArrowIcon />
+        <StyledLeftArrowIcon onClick={() => router.push('/')} />
         <StyledStartInput
           size={'large'}
           prefix={<BlueBorderCircleIcon style={{ marginRight: '5px' }} />}
