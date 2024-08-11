@@ -6,6 +6,7 @@ import { routesAtom } from '@/atoms';
 import { Coordinates, noneSelectedRouteColor, selectedRouteColor } from '@/components/map/data';
 import { drawRoute, fitBounds, getMarkerElements, highlightRoute, removeAllLayers } from '@/components/map/functions';
 import { Overlay } from '@/components/map/Overlay';
+import { useRouter } from 'next/router';
 
 const token = 'pk.eyJ1Ijoic2Vod2FuZm9yZWFsIiwiYSI6ImNsem56M2s0ZTBxZ2syanM4ZGx4b210bHgifQ.c4OIRu9bEN1Vbt0UVrZSKA';
 
@@ -110,6 +111,7 @@ export default function Map() {
 }
 
 const StartNavigate = () => {
+  const router = useRouter();
   return (
     <div
       style={{
@@ -124,6 +126,7 @@ const StartNavigate = () => {
         fontSize: '18px',
         cursor: 'pointer',
       }}
+      onClick={() => router.push('naviload')}
     >
       Start Route Guidance
     </div>
