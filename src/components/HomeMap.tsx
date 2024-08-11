@@ -7,7 +7,7 @@ mapboxgl.accessToken = token;
 
 type Coordinates = [number, number];
 
-const origin = [129.36071, 36.05328] as Coordinates;
+const origin = [129.342649, 36.018692] as Coordinates;
 
 export default function HomeMap() {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
