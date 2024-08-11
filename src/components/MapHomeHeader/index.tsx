@@ -27,10 +27,18 @@ export default function MapHomeHeader() {
 
   useDebounce(
     async () => {
-      if (!destinationKeyword) setSuggestions([]);
+      if (!destinationKeyword) {
+        setSuggestions([]);
+        return;
+      }
       const response = await axios.get(
         `https://api.mapbox.com/search/geocode/v6/forward?q=${destinationKeyword}&proximity=ip&access_token=${MAPBOX_ACCESS_TOKEN}`,
       );
+
+      if (!response?.data?.features) {
+        setSuggestions([]);
+        return;
+      }
 
       if (!response.data.features.length) {
         message.error('검색 결과가 없습니다.');
