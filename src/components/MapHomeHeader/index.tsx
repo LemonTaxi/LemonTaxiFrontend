@@ -1,13 +1,13 @@
 import emotionStyled from '@emotion/styled';
 import LeftArrowIcon from '@/public/icons/icon-left-arrow.svg';
 import NavyFilledCircleIcon from '@/public/icons/icon-navy-filled-circle.svg';
-import { Dropdown, Input, MenuProps } from 'antd';
+import { Input } from 'antd';
 import { useState } from 'react';
 import { useDebounce } from 'react-use';
 import HomeHeaderImage from '@/public/images/image-home-header.svg';
 import axios from 'axios';
 import { useSetAtom } from 'jotai';
-import { destinationAtom, routesAtom } from '@/atoms';
+import { destinationAtom, durationAtom, routesAtom } from '@/atoms';
 import { useRouter } from 'next/router';
 import SuggestionItem from '@/components/MapHomeHeader/SuggestionItem';
 
@@ -22,6 +22,7 @@ export default function MapHomeHeader() {
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const setRoutes = useSetAtom(routesAtom);
   const setDestination = useSetAtom(destinationAtom);
+  const setDuration = useSetAtom(durationAtom);
   const router = useRouter();
 
   useDebounce(
@@ -37,7 +38,6 @@ export default function MapHomeHeader() {
   );
 
   async function handleMenuClick(id: string) {
-    console.log('clicked');
     const selected = suggestions.find(suggestion => suggestion.id === id);
     if (!selected) {
       throw new Error('handleMeneClick > suggestions.find 실패ㅠㅠ');
@@ -47,6 +47,7 @@ export default function MapHomeHeader() {
     );
     setRoutes(response.data.routes.slice(0, 2).map((route: any) => route.geometry));
     setDestination(selected.properties.name);
+    setDuration(response.data.routes.map((route: any) => route.duration));
 
     router.push('/map');
   }

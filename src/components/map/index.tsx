@@ -1,8 +1,8 @@
 import mapboxgl from 'mapbox-gl';
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { useAtomValue } from 'jotai';
-import { routesAtom } from '@/atoms';
+import { useAtom, useAtomValue } from 'jotai';
+import { routesAtom, selectedRouteAtom } from '@/atoms';
 import { Coordinates, noneSelectedRouteColor, selectedRouteColor } from '@/components/map/data';
 import { drawRoute, fitBounds, getMarkerElements, highlightRoute, removeAllLayers } from '@/components/map/functions';
 import { Overlay } from '@/components/map/Overlay';
@@ -22,8 +22,9 @@ export default function Map() {
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const [safeCoordinates, setSafeCoordinates] = useState<Coordinates[] | null>(null);
   const [dangerousCoordinates, setDangerousCoordinates] = useState<Coordinates[] | null>(null);
+
+  const [selectedRoute, setSelectedRoute] = useAtom(selectedRouteAtom);
   const [hazards, setHazards] = useState<{ coordinate: Coordinates; coordinates: Coordinates[] }[] | null>(null);
-  const [selectedRoute, setSelectedRoute] = useState<string>('custom-safe');
 
   useEffect(() => {
     // Map 초기화
@@ -98,7 +99,7 @@ export default function Map() {
 
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'column', position: 'relative', height: 'calc(100vh - 244px)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', position: 'relative', height: 'calc(100vh - 238px)' }}>
         <div style={{ position: 'absolute', top: 0, width: '100%', height: '100%' }} ref={mapContainerRef} />
         <Overlay left={12} onClick={() => onClickRouteBox(true)} selected={selectedRoute === 'custom-safe'} />
         {dangerousCoordinates && (
