@@ -22,7 +22,7 @@ export default function Map() {
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const [safeCoordinates, setSafeCoordinates] = useState<Coordinates[] | null>(null);
   const [dangerousCoordinates, setDangerousCoordinates] = useState<Coordinates[] | null>(null);
-  const [hazard, setHazard] = useState<{ coordinate: Coordinates; coordinates: Coordinates[] } | null>(null);
+  const [hazards, setHazards] = useState<{ coordinate: Coordinates; coordinates: Coordinates[] }[] | null>(null);
   const [selectedRoute, setSelectedRoute] = useState<string>('custom-safe');
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function Map() {
         const safe = data.routes.find(({ route_type }: any) => route_type === 0);
         setSafeCoordinates(safe.id === 'A' ? routes[0].coordinates : routes[1].coordinates);
         setDangerousCoordinates(safe.id === 'A' ? routes[1].coordinates : routes[0].coordinates);
-        setHazard(data.routes.find(({ route_type }: any) => route_type === 1).hazards[0]);
+        setHazards(data.routes.find(({ route_type }: any) => route_type === 1).hazards);
       });
   }, []);
 
@@ -74,8 +74,13 @@ export default function Map() {
 
     if (dangerousCoordinates) {
       drawRoute(map, dangerousCoordinates!, noneSelectedRouteColor, 'custom-dangerous');
-      drawRoute(map, hazard!.coordinates!, 'red', 'custom-hazard');
-      new mapboxgl.Marker(dangerZoneSvgMarker).setLngLat(hazard!.coordinate ?? [0, 0]).addTo(map);
+      hazards?.forEach((hazard, index) => {
+        console.log('forEach runed', hazard);
+        drawRoute(map, hazard.coordinates, 'red', `custom-hazard-${index}`);
+        const markerElement = document.createElement('div');
+        markerElement.innerHTML = dangerZoneSvgMarker.innerHTML; // Clone the SVG content
+        new mapboxgl.Marker(markerElement).setLngLat(hazard.coordinate).addTo(map);
+      });
     }
 
     drawRoute(map, safeCoordinates!, selectedRouteColor, 'custom-safe');
@@ -86,7 +91,7 @@ export default function Map() {
       .addTo(map);
 
     if (safeCoordinates) fitBounds(map, safeCoordinates);
-  }, [safeCoordinates, dangerousCoordinates, hazard, isMapLoaded]);
+  }, [safeCoordinates, dangerousCoordinates, hazards, isMapLoaded]);
 
   const onClickRouteBox = (safe = false) =>
     highlightRoute(mapRef.current!, safe ? 'custom-safe' : 'custom-dangerous', setSelectedRoute);
